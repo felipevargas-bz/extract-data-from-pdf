@@ -16,6 +16,7 @@ After extracting the information, it is saved in the database in a table called 
 * [PostgreSQL](https://www.postgresql.org/)
 * [Docker](https://www.docker.com/)
 * [FastApi](https://fastapi.tiangolo.com/)
+* [SQLAlchemy ORM](https://www.sqlalchemy.org/)
 
 ## Installation
 
