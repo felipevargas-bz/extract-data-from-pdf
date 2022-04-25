@@ -15,8 +15,7 @@ router = APIRouter()
 
 # Dependency
 def get_db():
-    """Get connection to database
-    """
+    """Get connection to database"""
     db = SessionLocal()
     try:
         yield db
@@ -25,14 +24,19 @@ def get_db():
 
 
 @router.get(
-    '/db_data',
+    "/db_data",
     responses={
-        200: {'Success': 'Extraction data was successfully retrieved'},
-        400: {'Bad Request': 'The request could not be understood by the server due to malformed syntax'},
-        404: {'Not Found': 'The requested resource could not be found but may be available again in the future'},
+        200: {"Success": "Extraction data was successfully retrieved"},
+        400: {
+            "Bad Request": "The request could not be understood by the server due to malformed syntax"
+        },
+        404: {
+            "Not Found": "The requested resource could not be found but may be available again in the future"
+        },
     },
     response_class=JSONResponse,
-    response_model=List[Dict])
+    response_model=List[Dict[str, str]],
+)
 def get_data_by_table(table_name: str, db: Session = Depends(get_db)):
     """_summary_
 
@@ -48,24 +52,26 @@ def get_data_by_table(table_name: str, db: Session = Depends(get_db)):
     service = identify_table(table_name)
     response = service.get_all(db=db)
     if response:
-        return JSONResponse(status_code=200, content=response)
+        return JSONResponse(content=response, status_code=200)
     else:
-        raise HTTPException(status_code=404, content={"message": "No data found"})
+        raise HTTPException(status_code=404, detail={"message": "No data found"})
 
 
 @router.post(
-    '/extract',
+    "/extract",
     responses={
-        201: {'Created': 'Extraction data was successfully created'},
-        400: {'Bad Request': 'The request could not be understood by the server due to malformed syntax'},
-        500: {'Internal Server Error': 'The server encountered an unexpected condition which prevented it from fulfilling the request'},
+        201: {"Created": "Extraction data was successfully created"},
+        400: {
+            "Bad Request": "The request could not be understood by the server due to malformed syntax"
+        },
+        500: {
+            "Internal Server Error": "The server encountered an unexpected condition which prevented it from fulfilling the request"
+        },
     },
     response_class=JSONResponse,
-    response_model=ExtractionCreate)
-def create_extraction_by_path(
-    *, path: str,
-    db: Session = Depends(get_db
-                          )):
+    response_model=ExtractionCreate,
+)
+def create_extraction_by_path(*, path: str, db: Session = Depends(get_db)):
     """It extracts the data from the pdf whose path was passed as a parameter, then calls the
        create function to store that data in the database.
 
@@ -81,28 +87,40 @@ def create_extraction_by_path(
     if text and len(text) > 1:
         extractions: List[ContentFile] = []
         for i in range(len(text)):
-            extraction_page: ExtractionCreate = ExtractionCreate(**extract_data_pdf(text[i], path))
-            extractions.append(extraction_service.create(db=db, payload=extraction_page))
+            extraction_page: ExtractionCreate = ExtractionCreate(
+                **extract_data_pdf(text[i], path)
+            )
+            extractions.append(
+                extraction_service.create(db=db, payload=extraction_page)
+            )
             return JSONResponse(status_code=201, content=extractions)
     elif text and len(text) == 1:
-        extraction: ExtractionCreate = ExtractionCreate(**extract_data_pdf(text[0], path))
-        return JSONResponse(status_code=201, content=extraction_service.create(db=db, payload=extraction))
+        extraction: ExtractionCreate = ExtractionCreate(
+            **extract_data_pdf(text[0], path)
+        )
+        return JSONResponse(
+            status_code=201,
+            content=extraction_service.create(db=db, payload=extraction),
+        )
     else:
-        raise HTTPException(status_code=400, detail='Bad request')
+        raise HTTPException(status_code=400, detail="Bad request")
 
 
 @router.post(
-    '/upload-pdf',
+    "/upload-pdf",
     responses={
-        201: {'Uploaded': 'PDF was successfully uploaded'},
-        400: {'Bad Request': 'The request could not be understood by the server due to malformed syntax'},
-        500: {'Internal Server Error': 'The server encountered an unexpected condition which prevented it from fulfilling the request'},
+        201: {"Uploaded": "PDF was successfully uploaded"},
+        400: {
+            "Bad Request": "The request could not be understood by the server due to malformed syntax"
+        },
+        500: {
+            "Internal Server Error": "The server encountered an unexpected condition which prevented it from fulfilling the request"
+        },
     },
     response_class=JSONResponse,
-    response_model=Dict[str, str])
-def upload_pdf(
-    contents_pdf: ContentFile = Depends(check_filePDF)
-):
+    response_model=Dict[str, str],
+)
+def upload_pdf(contents_pdf: ContentFile = Depends(check_filePDF)):
     """Save the file passed in the Body in the container that is running the application, in the path
        /usr/src/app/files/pdf.
 
@@ -111,18 +129,26 @@ def upload_pdf(
     """
 
     file_path = save_file(contents_pdf.name, contents_pdf.contents)
-    return JSONResponse(status_code=201, content={"message": f"File uploaded successfully to {file_path}"})
+    return JSONResponse(
+        status_code=201,
+        content={"message": f"File uploaded successfully to {file_path}"},
+    )
 
 
 @router.get(
-    '/paths',
+    "/paths",
     responses={
-        200: {'Success': 'List of files was successfully retrieved'},
-        400: {'Bad Request': 'The request could not be understood by the server due to malformed syntax'},
-        500: {'Internal Server Error': 'The server encountered an unexpected condition which prevented it from fulfilling the request'},
+        200: {"Success": "List of files was successfully retrieved"},
+        400: {
+            "Bad Request": "The request could not be understood by the server due to malformed syntax"
+        },
+        500: {
+            "Internal Server Error": "The server encountered an unexpected condition which prevented it from fulfilling the request"
+        },
     },
     response_class=JSONResponse,
-    response_model=List[str])
+    response_model=List[str],
+)
 def get_paths(file_name: Optional[str] = None):
     """Get all the paths of the uploaded documents, if and only if file_name == None, otherwise get the
        path of the file whose name is the value of file_name.
@@ -137,14 +163,19 @@ def get_paths(file_name: Optional[str] = None):
 
 
 @router.delete(
-    '/delete-file',
+    "/delete-file",
     responses={
-        202: {'Deleted': 'File was successfully deleted'},
-        400: {'Bad Request': 'The request could not be understood by the server due to malformed syntax'},
-        500: {'Internal Server Error': 'The server encountered an unexpected condition which prevented it from fulfilling the request'},
+        202: {"Deleted": "File was successfully deleted"},
+        400: {
+            "Bad Request": "The request could not be understood by the server due to malformed syntax"
+        },
+        500: {
+            "Internal Server Error": "The server encountered an unexpected condition which prevented it from fulfilling the request"
+        },
     },
     response_class=JSONResponse,
-    response_model=Dict[str, Any])
+    response_model=Dict[str, Any],
+)
 def delete_file(file_name: Optional[str] = None):
     """Deletes a document stored on the server by name.
 

@@ -16,8 +16,8 @@ services:
       - WEB_APP_VERSION=0.1.0
       - WEB_APP_TITLE=PDF data extraction service
       - WEB_APP_DESCRIPTION=Extract data from a pdf when you send it a path of the containing machine.
-      - DATABASE_URL=postgresql://postgres:postgres@extraction-db:5432/extraction_dev
-      - ENVIRONMENT=dev
+      - DATABASE_URL=postgresql://postgres:postgres@extraction-db:5432/extraction_db
+      - DATABASE_TEST_URL=postgres://postgres:postgres@extraction-db:5432/extraction_test
     networks:
       - extractions
 
@@ -36,7 +36,6 @@ services:
       - LC_ALL=C.UTF-8
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=extraction_dev
     volumes:
       - db_extractions:/var/lib/postgresql/data
     networks:

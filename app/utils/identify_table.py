@@ -16,7 +16,7 @@ def identify_table(table: str) -> Any:
         Any: returns the controller of the respective table.
     """
     table = table.lower()
-    if table == 'extraction':
+    if table == "extraction":
         return extraction_service
     else:
         raise HTTPException(status_code=400, detail=f"Table {table} dasn't exist")

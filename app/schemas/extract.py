@@ -32,3 +32,14 @@ class ExtractionPayload(BaseModel):
     End_date: Optional[str] = None
     Comments: Optional[str] = None
     Doc_Path: Optional[str] = None
+
+
+class ExtractionResponse:
+    id: Optional[int] = None
+    Vendor_Name: Optional[str] = None
+    Fiscal_Number: Optional[str] = None
+    Contract: Optional[str] = None
+    Start_Date: Optional[str] = None
+    End_date: Optional[str] = None
+    Comments: Optional[str] = None
+    Doc_Path: Optional[str] = None

@@ -9,6 +9,7 @@ class BaseModel(Base):
     """
     Base class for all models
     """
+
     __abstract__ = True
 
     id = Column(Integer, primary_key=True)

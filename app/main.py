@@ -11,4 +11,4 @@ app = FastAPI(
     description=settings.WEB_APP_DESCRIPTION,
 )
 
-app.include_router(api_router, tags=['Extractions'])
+app.include_router(api_router, tags=["Extractions"])

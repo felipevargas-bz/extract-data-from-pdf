@@ -1,17 +1,18 @@
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from fastapi import HTTPException
+from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
 from app.models import Extraction as Extraction_model
-from app.schemas import Extraction, ExtractionCreate
+from app.schemas import ExtractionCreate, ExtractionResponse
 
 
 class ExtractionService:
-    """CRUD service for the Extraction model
-    """
+    """CRUD service for the Extraction model"""
+
     @staticmethod
-    def create(db: Session, payload: ExtractionCreate) -> Extraction:
+    def create(db: Session, payload: ExtractionCreate) -> List[Any]:
         """Create new extraction
 
         Args:
@@ -26,13 +27,14 @@ class ExtractionService:
             db.add(db_obj)
             db.commit()
             db.refresh(db_obj)
-            extraction = Extraction(**db_obj.__dict__)
+            extraction = ExtractionCreate(**db_obj.__dict__)
 
-            return extraction
+            return [[True, db_obj.id], extraction.dict()]
         except Exception as e:
             raise HTTPException(
                 status_code=400,
-                detail=f'An error occurred while creating the Extract Error: {str(e)}')
+                detail=f"An error occurred while creating the Extract Error: {str(e)}",
+            )
 
     @staticmethod
     def get_all(db: Session) -> List[Dict]:
@@ -45,12 +47,24 @@ class ExtractionService:
             List[Extraction]: List of extractions
         """
         try:
-            extractions = [db_obj.__dict__ for db_obj in db.query(Extraction_model).all()]
+            extractions = []
+            for obj in db.query(Extraction_model).order_by(desc(Extraction_model.id)):
+                extraction = ExtractionResponse()
+                setattr(extraction, "id", obj.id)
+                setattr(extraction, "Vendor_Name", obj.Vendor_Name)
+                setattr(extraction, "Fiscal_Number", obj.Fiscal_Number)
+                setattr(extraction, "Contract", obj.Contract)
+                setattr(extraction, "Start_Date", obj.Start_Date)
+                setattr(extraction, "End_date", obj.End_date)
+                setattr(extraction, "Comments", obj.Comments)
+                setattr(extraction, "Doc_Path", obj.Doc_Path)
+                extractions.append(extraction.__dict__)
             return extractions
         except Exception as e:
             raise HTTPException(
                 status_code=404,
-                detail=f'An error occurred while trying to get the Extractions Error: {str(e)}')
+                detail=f"An error occurred while trying to get the Extractions Error: {str(e)}",
+            )
 
 
 extraction_service = ExtractionService()

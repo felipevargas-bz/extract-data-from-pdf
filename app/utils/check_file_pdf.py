@@ -11,7 +11,7 @@ def check_filePDF(file: UploadFile = File(...)) -> ContentFile:
                      name and content of the pdf file.
     """
     contents = file.file.read()
-    if '.pdf' not in file.filename:
-        raise HTTPException(status_code=400, detail='File must be a PDF')
+    if ".pdf" not in file.filename:
+        raise HTTPException(status_code=400, detail="File must be a PDF")
 
-    return ContentFile(**{'name': str(file.filename), 'contents': contents})
+    return ContentFile(**{"name": str(file.filename), "contents": contents})

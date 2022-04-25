@@ -13,11 +13,12 @@ def save_file(filename: str, data) -> str:
     """
 
     try:
-        with open(f'/usr/src/app/files/pdf/{filename}', 'wb') as f:
+        with open(f"/usr/src/app/files/pdf/{filename}", "wb") as f:
             f.write(data)
 
-        return f'/usr/src/app/files/pdf/{filename}'
+        return f"/usr/src/app/files/pdf/{filename}"
     except OSError as e:
         raise HTTPException(
             status_code=500,
-            detail=f'An error occurred while trying to save the pdf Error: {e}')
+            detail=f"An error occurred while trying to save the pdf Error: {e}",
+        )

@@ -9,5 +9,6 @@ class ContentFile(BaseModel):
     Args:
         BaseModel (_type_): _description_
     """
+
     name: str
     contents: Any
