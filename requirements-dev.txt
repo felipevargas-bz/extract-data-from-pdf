@@ -1,0 +1,16 @@
+fastapi==0.75.2
+gunicorn==20.1.0
+httptools==0.4.0
+pdf2image==1.16.0
+psycopg2-binary==2.9.3
+pytesseract==0.3.7
+pre-commit==2.18.1
+flake8==4.0.1
+black==22.3.0
+click==8.0.2
+python-multipart==0.0.5
+SQLAlchemy==1.4.35
+uvicorn==0.16.0
+uvloop==0.14.0
+unittest2==1.1.0
+requests==2.27.1

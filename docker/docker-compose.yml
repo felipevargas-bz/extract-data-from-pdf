@@ -1,0 +1,51 @@
+version: "3.2"
+
+services:
+  extraction:
+    image: extraction-service
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8085
+    volumes:
+      - ../:/usr/src/app/
+    ports:
+      - 8081:8085
+      - 10008:10008
+    environment:
+      - WEB_APP_VERSION=0.1.0
+      - WEB_APP_TITLE=PDF data extraction service
+      - WEB_APP_DESCRIPTION=Extract data from a pdf when you send it a path of the containing machine.
+      - DATABASE_URL=postgresql://postgres:postgres@extraction-db:5432/extraction_dev
+      - ENVIRONMENT=dev
+    networks:
+      - extractions
+
+  extraction-db:
+    image: extraction-db
+    build:
+      context: ../db
+      dockerfile: Dockerfile
+    container_name: extraction-db
+    expose:
+      - 5432
+    ports:
+      - "5436:5432"
+    environment:
+      - LANG=C.UTF-8
+      - LC_ALL=C.UTF-8
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=extraction_dev
+    volumes:
+      - db_extractions:/var/lib/postgresql/data
+    networks:
+      - extractions
+
+volumes:
+  db_extractions:
+    external: true
+
+networks:
+  extractions:
+    external: true

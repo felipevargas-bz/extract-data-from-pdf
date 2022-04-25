@@ -1,0 +1,10 @@
+fastapi==0.75.2
+gunicorn==20.1.0
+httptools==0.4.0
+pdf2image==1.16.0
+psycopg2-binary==2.9.3
+pytesseract==0.3.7
+python-multipart==0.0.5
+SQLAlchemy==1.4.35
+uvicorn==0.16.0
+uvloop==0.14.0
