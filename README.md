@@ -11,6 +11,15 @@ Extract information from a pdf, the application makes use of OCR recognition to 
 
 After extracting the information, it is saved in the database in a table called extractions.
 
+This project makes use of the following libraries to extract and filter the information that you want to obtain.
+
+* [pdf2image 1.16.0](https://pypi.org/project/pdf2image/)
+convert pdf to image
+* [pytesseract 0.3.7](https://www.postgresql.org/)
+receives an image and returns the text that is recognized in the image.
+* [re](https://docs.python.org/3/library/re.html)
+It is used for handling regular expressions in python, it was used to extract the desired information from the text that pytesseract returns.
+
 ## Technologies
 * [Python](https://www.python.org/)
 * [PostgreSQL](https://www.postgresql.org/)
