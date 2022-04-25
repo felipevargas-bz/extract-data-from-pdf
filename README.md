@@ -11,6 +11,12 @@ Extract information from a pdf, the application makes use of OCR recognition to 
 
 After extracting the information, it is saved in the database in a table called extractions.
 
+## Technologies
+* [Python](https://www.python.org/)
+* [PostgreSQL](https://www.postgresql.org/)
+* [Docker](https://www.docker.com/)
+* [FastApi](https://fastapi.tiangolo.com/)
+
 ## Installation
 
 ### Requirements
