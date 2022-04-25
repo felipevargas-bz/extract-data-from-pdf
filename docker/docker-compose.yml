@@ -6,6 +6,7 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
+    container_name: extraction-service
     command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8085
     volumes:
       - ../:/usr/src/app/
@@ -20,31 +21,6 @@ services:
       - DATABASE_TEST_URL=postgres://postgres:postgres@extraction-db:5432/extraction_test
     networks:
       - extractions
-
-  extraction-db:
-    image: extraction-db
-    build:
-      context: ../db
-      dockerfile: Dockerfile
-    container_name: extraction-db
-    expose:
-      - 5432
-    ports:
-      - "5436:5432"
-    environment:
-      - LANG=C.UTF-8
-      - LC_ALL=C.UTF-8
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    volumes:
-      - db_extractions:/var/lib/postgresql/data
-    networks:
-      - extractions
-
-volumes:
-  db_extractions:
-    external: true
-
 networks:
   extractions:
     external: true
