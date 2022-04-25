@@ -58,4 +58,4 @@ Get all the paths of the uploaded documents, if and only if file_name == None, o
 Deletes a document stored on the server by name.
 
 ### Authors :black_nib:
-* __Angel Felipe Vargas, felipevargas.bz@gmail.com__
+* __Felipe Vargas, felipevargas.bz@gmail.com__
