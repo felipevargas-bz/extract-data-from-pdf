@@ -8,7 +8,9 @@ class Settings(BaseSettings):
 
     WEB_APP_TITLE: str = Field(...)
     WEB_APP_DESCRIPTION: str = """
-    Extract information from a pdf, the application makes use of OCR recognition to extract the information from the pdf that is uploaded to the server, this application was built with pytesseract as a library to extract the information from the pdf. pytesseract returns the text to which we subsequently filter the information we need through Regular Expressions, the information to be extracted from the pdf is as follows.
+    Extract information from a pdf, the application makes use of OCR recognition to extract the information from the pdf that is uploaded to the server,
+    this application was built with pytesseract as a library to extract the information from the pdf. pytesseract returns the text to which we subsequently
+    filter the information we need through Regular Expressions, the information to be extracted from the pdf is as follows.
 
         * Vendor Name
         * Fiscal Number
@@ -22,7 +24,8 @@ class Settings(BaseSettings):
 
         * [pdf2image 1.16.0] convert pdf to image
         * [pytesseract 0.3.7] receives an image and returns the text that is recognized in the image.
-        * [re] It is used for handling regular expressions in python, it was used to extract the desired information from the text that pytesseract returns.
+        * [re] It is used for handling regular expressions in python, it was used to extract the desired information from the text that pytesseract
+               returns.
 
     Technologies
         * Python
