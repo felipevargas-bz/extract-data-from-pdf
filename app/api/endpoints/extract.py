@@ -35,8 +35,7 @@ def get_db():
         },
     },
     response_class=JSONResponse,
-    response_model=List[Dict[str, str]],
-    description="Get all the data from the database default table extraction",
+    response_model=List[Dict[str, str]]
 )
 def get_data_by_table(table_name: str, db: Session = Depends(get_db)):
     """It returns all the data of a table passed as an argument, in v0.1.0 it returns all the information
@@ -72,7 +71,6 @@ def get_data_by_table(table_name: str, db: Session = Depends(get_db)):
     },
     response_class=JSONResponse,
     response_model=ExtractionCreate,
-    description="Create a new extraction",
 )
 def create_extraction_by_path(*, path: str, db: Session = Depends(get_db)):
     """It extracts the data from the pdf whose path was passed as a parameter, then calls the
@@ -121,8 +119,7 @@ def create_extraction_by_path(*, path: str, db: Session = Depends(get_db)):
         },
     },
     response_class=JSONResponse,
-    response_model=Dict[str, str],
-    description="Upload a new pdf",
+    response_model=Dict[str, str]
 )
 def upload_pdf(contents_pdf: ContentFile = Depends(check_filePDF)):
     """Save the file passed in the Body in the container that is running the application, in the path
@@ -151,8 +148,7 @@ def upload_pdf(contents_pdf: ContentFile = Depends(check_filePDF)):
         },
     },
     response_class=JSONResponse,
-    response_model=List[str],
-    description="Get all the paths of the files stored in the server",
+    response_model=List[str]
 )
 def get_paths(file_name: Optional[str] = None):
     """Get all the paths of the uploaded documents, if and only if file_name == None, otherwise get the
@@ -179,8 +175,7 @@ def get_paths(file_name: Optional[str] = None):
         },
     },
     response_class=JSONResponse,
-    response_model=Dict[str, Any],
-    description="Delete a file by its name",
+    response_model=Dict[str, Any]
 )
 def delete_file(file_name: Optional[str] = None):
     """Deletes a document stored on the server by name.
