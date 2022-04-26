@@ -29,7 +29,7 @@ def list_files(file_name: str = None) -> List[Dict[str, str]]:
     if file_list and file_name is not None and file_name in file_list:
         for file in file_list:
             if file == file_name:
-                return [{"Path": f"/usr/src/app/files/pdf{file}", "file_name": file}]
+                return [{"Path": f"/usr/src/app/files/pdf/{file}", "file_name": file}]
     elif file_list and file_name and file_name not in file_list:
         raise HTTPException(status_code=400, detail=f"File {file_name} not found")
     else:
