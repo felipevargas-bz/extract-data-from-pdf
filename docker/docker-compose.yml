@@ -15,7 +15,6 @@ services:
     environment:
       - WEB_APP_VERSION=0.1.0
       - WEB_APP_TITLE=PDF data extraction service
-      - WEB_APP_DESCRIPTION=Extract data from a pdf when you send it a path of the containing machine.
       - DATABASE_URL=postgresql://postgres:postgres@extraction-db:5432/extraction_db
       - DATABASE_TEST_URL=postgres://postgres:postgres@extraction-db:5432/extraction_test
     networks:
