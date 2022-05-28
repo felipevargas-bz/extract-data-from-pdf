@@ -1,4 +1,4 @@
-# Technical-assessment-backend
+# Extract-data-from-pdf
 
 Extract information from a pdf, the application makes use of OCR recognition to extract the information from the pdf that is uploaded to the server, this application was built with pytesseract as a library to extract the information from the pdf. pytesseract returns the text to which we subsequently filter the information we need through Regular Expressions, the information to be extracted from the pdf is as follows.
 
