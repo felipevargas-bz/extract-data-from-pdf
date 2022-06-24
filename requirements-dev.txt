@@ -2,7 +2,7 @@ fastapi==0.75.2
 gunicorn==20.1.0
 httptools==0.4.0
 pdf2image==1.16.0
-psycopg2-binary==2.9.3
+psycopg2-binary==2.8.3
 pytesseract==0.3.7
 pre-commit==2.18.1
 flake8==4.0.1
